@@ -1,6 +1,6 @@
 const User = require('../model/userSchema')
-const generateToken = require('../utils/generateToken')
 const asyncErrorHandler = require('../middlewares/asyncErrorHandler')
+const generateToken = require('../utils/generateToken')
 
 const SignUp = asyncErrorHandler(async (req, res) => {
     try {
@@ -19,9 +19,10 @@ const SignUp = asyncErrorHandler(async (req, res) => {
             phone: phone,
             image: image
         })
-        await newUser.save()
 
+        await newUser.save()
         const token = generateToken(newUser._id)
+
 
         return res.status(201).json({
             status: 'Success',
@@ -57,11 +58,8 @@ const Login = asyncErrorHandler(async (req, res) => {
 
     const token = generateToken(findUser._id)
 
-    // Set the token in a cookie
-    res.cookie('jwt', token, { httpOnly: true, secure: true, maxAge: 86400000 }); // 1 day expiry (86400000 milliseconds)
-
     return res.status(200).json({
-        // message:'Token set in cookie',
+        message:'Success',
         token,
         findUser
     })
