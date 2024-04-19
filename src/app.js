@@ -2,11 +2,11 @@ const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
 const bodyParser = require('body-parser')
-const app = express();
 const globalErrorHandler = require('././apis/controllers/errorController')
 const userRouter = require('././apis/router/userRouter');
 const authRouter = require('./apis/router/authRouter');
 const messageRouter = require('./apis/router/messageRouter');
+const app = express();
 app.use(cors())
 app.use(express.json())
 app.use(morgan('dev'))
