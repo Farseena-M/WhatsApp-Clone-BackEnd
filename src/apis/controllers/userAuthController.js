@@ -57,7 +57,11 @@ const Login = asyncErrorHandler(async (req, res) => {
 
     const token = generateToken(findUser._id)
 
+    // Set the token in a cookie
+    res.cookie('jwt', token, { httpOnly: true, secure: true, maxAge: 86400000 }); // 1 day expiry (86400000 milliseconds)
+
     return res.status(200).json({
+        // message:'Token set in cookie',
         token,
         findUser
     })
@@ -65,7 +69,7 @@ const Login = asyncErrorHandler(async (req, res) => {
 })
 
 
-const Logout = asyncErrorHandler(async(req, res) => {
+const Logout = asyncErrorHandler(async (req, res) => {
     try {
         res.cookie('jwt', '', { maxAge: 0 })
         return res.status(200).json({ message: 'Logged out successfully' })
