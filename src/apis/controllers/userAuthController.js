@@ -4,8 +4,8 @@ const generateToken = require('../utils/generateToken')
 
 const SignUp = asyncErrorHandler(async (req, res) => {
     try {
-        const { name, username, email, password, phone, image } = req.body
-        const Exist = await User.findOne({ username })
+        const { name, email, password, phone, image } = req.body
+        const Exist = await User.findOne({ name })
         if (Exist) {
             return res.status(409).json({
                 error: 'User already exists'
@@ -13,7 +13,6 @@ const SignUp = asyncErrorHandler(async (req, res) => {
         }
         const newUser = new User({
             name: name,
-            username: username,
             email: email,
             password: password,
             phone: phone,
@@ -29,7 +28,6 @@ const SignUp = asyncErrorHandler(async (req, res) => {
             token,
             _id: newUser._id,
             name: newUser.name,
-            username: newUser.username,
             email: newUser.email,
             password: newUser.password,
             phone: newUser.phone,
