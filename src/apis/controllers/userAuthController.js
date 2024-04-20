@@ -67,15 +67,7 @@ const Login = asyncErrorHandler(async (req, res) => {
 })
 
 
-const Logout = asyncErrorHandler(async (req, res) => {
-    try {
-        res.cookie('jwt', '', { maxAge: 0 })
-        return res.status(200).json({ message: 'Logged out successfully' })
-    } catch (err) {
-        return res.status(500).json({ error: err.message });
-    }
-})
 
 module.exports = {
-    SignUp, Login, Logout
+    SignUp, Login
 }

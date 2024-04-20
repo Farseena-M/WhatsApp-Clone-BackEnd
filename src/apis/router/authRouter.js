@@ -5,7 +5,6 @@ const authRouter = express.Router()
 
 authRouter.post('/signup',uploadImage,(userAuthController.SignUp))
 .post('/login',(userAuthController.Login))
-.post('/logout',(userAuthController.Logout))
 
 
 
