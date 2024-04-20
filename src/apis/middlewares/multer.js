@@ -31,21 +31,17 @@ const uploadImage = (req, res, next) => {
             })
             req.body.image = result.secure_url
 
+
+
+            next()
+        } catch (error) {
             // fs.unlink(req.file.path,(unlinker) => {
             //     if (unlinker) {
             //       console.log(`deleting local file`, unlinker)
             //     }
             //   })
-            
             next()
-        } catch (error) {
 
-            res.status(500).json({
-                status: 'failed',
-                message: err
-            })
-            next() 
-            
         }
     })
 }
