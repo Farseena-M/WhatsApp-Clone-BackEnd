@@ -1,6 +1,7 @@
 const asyncErrorHandler = require('../middlewares/asyncErrorHandler');
 const Conversation = require('../model/conversationSchema');
 const Message = require('../model/messageSchema');
+const { getRecieverSocketId } = require('../socket/socket');
 
 const sendMessage = asyncErrorHandler(async (req, res) => {
     try {
@@ -24,13 +25,23 @@ const sendMessage = asyncErrorHandler(async (req, res) => {
             message,
             createdAt:new Date()
         });
-
+      if(newMessage){
         conversation.messages.push(newMessage._id);
+      }
 
         //This will run in parallel
         Promise.all([conversation.save(), newMessage.save()])
-        return res.status(201).json(newMessage);
 
+      //Socket function
+
+      const recieverSocketId = getRecieverSocketId(reciever)
+      if(recieverSocketId){
+        //io.to (<socket._id>).emit() used to send events to specific client
+        io.to(recieverSocketId).emit('newMessage',newMessage)
+      }
+
+        return res.status(201).json(newMessage);
+ 
     } catch (err) {
         return res.status(500).json({ error: err.message });
     }
