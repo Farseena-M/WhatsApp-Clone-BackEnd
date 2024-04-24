@@ -51,7 +51,7 @@ const Login = asyncErrorHandler(async (req, res) => {
 
     const findUser = await User.findOne({ email }).select('+password')
     if (!findUser || !(await findUser.comparePasswordInDb(password, findUser.password))) {
-        return res.status(404).json({ message: 'Incorrect username or password' })
+        return res.status(404).json({ message: 'Incorrect email or password' })
     }
 
     const token = generateToken(findUser._id)
