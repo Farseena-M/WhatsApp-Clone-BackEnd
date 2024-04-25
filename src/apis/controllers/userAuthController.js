@@ -59,7 +59,12 @@ const Login = asyncErrorHandler(async (req, res) => {
     return res.status(200).json({
         message:'Success',
         token,
-        findUser
+        _id: findUser._id,
+        name: findUser.name,
+        username: findUser.username,
+        image: findUser.image,
+        about: findUser.about,
+        phone: findUser.phone,
     })
 
 })
