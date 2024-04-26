@@ -23,25 +23,25 @@ const sendMessage = asyncErrorHandler(async (req, res) => {
             sender,
             reciever,
             message,
-            createdAt:new Date()
+            createdAt: new Date()
         });
-      if(newMessage){
-        conversation.messages.push(newMessage._id);
-      }
+        if (newMessage) {
+            conversation.messages.push(newMessage._id);
+        }
 
         //This will run in parallel
         Promise.all([conversation.save(), newMessage.save()])
 
-      //Socket function
+        //Socket function
 
-      const recieverSocketId = getRecieverSocketId(reciever)
-      if(recieverSocketId){
-        //io.to (<socket._id>).emit() used to send events to specific client
-        io.to(recieverSocketId).emit('newMessage',newMessage)
-      }
+        const recieverSocketId = getRecieverSocketId(reciever)
+        if (recieverSocketId) {
+            //io.to (<socket._id>).emit() used to send events to specific client
+            io.to(recieverSocketId).emit('newMessage', newMessage)
+        }
 
         return res.status(201).json(newMessage);
- 
+
     } catch (err) {
         return res.status(500).json({ error: err.message });
     }
@@ -67,7 +67,21 @@ const getMessages = asyncErrorHandler(async (req, res) => {
 })
 
 
+const UnreadMessageCount = asyncErrorHandler(async (req, res) => {
+    try {
+        const unReadMessages = await Message.countDocuments({
+            reciever: req.params.userId,
+            isRead: false
+        });
+        res.json({ unReadCount: unReadMessages });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
+
 module.exports = {
     sendMessage,
-    getMessages
+    getMessages,
+    UnreadMessageCount
 };

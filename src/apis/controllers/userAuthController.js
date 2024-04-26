@@ -64,7 +64,7 @@ const Login = asyncErrorHandler(async (req, res) => {
         username: findUser.username,
         image: findUser.image,
         about: findUser.about,
-        phone: findUser.phone,
+        phone: findUser.phone
     })
 
 })
