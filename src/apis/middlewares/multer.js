@@ -2,7 +2,7 @@ const multer = require('multer')
 const fs = require('fs')
 const path = require('path')
 const storage = multer.diskStorage({
-    destination: 'src/apis/assets',
+    destination: path.join(__dirname, "uploads"),
     filename: (req, file, cb) => {
         return cb(null, `${file.fieldname}_${Date.now()} ${file.originalname}`)
     }
