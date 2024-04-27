@@ -19,7 +19,7 @@ const userSchema = new mongoose.Schema({
     lowercase: true,
     validate: [Validator.isEmail, 'Please enter a valid Email']
   },
-  phone: { 
+  phone: {
     type: String,
     unique: true,
     required: [true, 'Phone Number is Required'],
@@ -35,17 +35,13 @@ const userSchema = new mongoose.Schema({
     // default:
     //     "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg",
   },
-  about:{
-   type:String
+  about: {
+    type: String
   },
   isDeleted: {
     type: Boolean,
     default: false,
     select: false
-  },
-  isOnline: {
-    type: String,
-    default: '0'
   },
   otp: { type: String, select: false },
   otpExpiredAt: { type: Date, select: false }
