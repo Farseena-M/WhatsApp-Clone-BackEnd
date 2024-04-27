@@ -7,11 +7,6 @@ const userSchema = new mongoose.Schema({
   name: {
     type: String
   },
-  username: {
-    type: String,
-    unique: true,
-    // required: [true, 'Username is required']
-  },
   email: {
     type: String,
     unique: true,
@@ -34,6 +29,11 @@ const userSchema = new mongoose.Schema({
     required: false,
     // default:
     //     "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg",
+  },
+  username: {
+    type: String,
+    unique: true,
+    // required: [true, 'Username is required']
   },
   about: {
     type: String

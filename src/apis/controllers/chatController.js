@@ -1,7 +1,7 @@
 const asyncErrorHandler = require('../middlewares/asyncErrorHandler');
 const Conversation = require('../model/conversationSchema');
 const Message = require('../model/messageSchema');
-const { getRecieverSocketId } = require('../socket/socket');
+const { getRecieverSocketId, io } = require('../socket/socket');
 
 const sendMessage = asyncErrorHandler(async (req, res) => {
     try {
@@ -59,6 +59,7 @@ const getMessages = asyncErrorHandler(async (req, res) => {
         if (!conversation) return res.status(200).json([])
 
         const messages = conversation.messages
+
         return res.status(200).json(messages)
 
     } catch (err) {
