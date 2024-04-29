@@ -74,6 +74,7 @@ const UnreadMessageCount = asyncErrorHandler(async (req, res) => {
             reciever: req.params.userId,
             isRead: false
         });
+        console.log(reciever);
         console.log(unReadMessages);
         res.json({ unReadCount: unReadMessages });
     } catch (error) {
