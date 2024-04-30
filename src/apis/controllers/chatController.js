@@ -56,6 +56,7 @@ const getMessages = asyncErrorHandler(async (req, res) => {
         const conversation = await Conversation.findOne({
             participants: { $all: [sender, userToChatId] }
         }).populate('messages')
+
         if (!conversation) return res.status(200).json([])
 
         const messages = conversation.messages
@@ -70,17 +71,20 @@ const getMessages = asyncErrorHandler(async (req, res) => {
 
 const UnreadMessageCount = asyncErrorHandler(async (req, res) => {
     try {
+        const userId = req.params.userId; 
         const unReadMessages = await Message.countDocuments({
-            reciever: req.params.userId,
+            receiver: userId,
             isRead: false
         });
-        console.log(reciever);
+        console.log(userId);
         console.log(unReadMessages);
         res.json({ unReadCount: unReadMessages });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 });
+
+
 
 
 module.exports = {

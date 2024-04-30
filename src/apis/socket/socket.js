@@ -1,6 +1,7 @@
 const express = require('express');
 const { Server } = require('socket.io');
 const http = require('http');
+const handleJoinRoom = require('./controller/room');
 const app = express();
 
 
@@ -21,8 +22,10 @@ const userSocketMap = {}  // {userId : socketId}
 
 io.on('connection', (socket) => {
     console.log(`user connected ${socket.id}`);
+    handleJoinRoom(socket)
     const userId = socket.handshake.query.userId
     if (userId != 'undefined') userSocketMap[userId] = socket.id
+
 
 
     //io.emit() is used to send events to all the connected clients
