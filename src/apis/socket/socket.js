@@ -22,7 +22,7 @@ const userSocketMap = {}  // {userId : socketId}
 
 io.on('connection', (socket) => {
     console.log(`user connected ${socket.id}`);
-    handleJoinRoom(socket)
+    // handleJoinRoom(socket)
     const userId = socket.handshake.query.userId
     if (userId != 'undefined') userSocketMap[userId] = socket.id
 

@@ -1,4 +1,4 @@
-const { v4: uuidV4 } = require('uuid');
+/* const { v4: uuidV4 } = require('uuid');
 const { getOneUser } = require('../../controllers/userController');
 const { io } = require('../socket');
 
@@ -17,10 +17,9 @@ const handleJoinRoom = (socket) => {
     socket.on('create-room', createRoom);
     socket.on('join-room', joinRoom);
 
-    // Handle WebRTC signaling messages
-    socket.on('offer', ({ offer, roomId, caller, receiver }) => {
-        const callerDetails = getOneUser(caller);
-        const receiverDetails = getOneUser(receiver);
+    socket.on('offer', async ({ offer, roomId, caller, receiver }) => {
+        const callerDetails = await getOneUser(caller);
+        const receiverDetails = await getOneUser(receiver);
         const data = {
             offer: offer,
             roomId: roomId,
@@ -34,9 +33,9 @@ const handleJoinRoom = (socket) => {
         }
     });
 
-    socket.on('answer', ({ roomId, answerer, receiver, answer }) => {
-        const answeredUser = getOneUser(answerer);
-        const receivedUser = getOneUser(receiver);
+    socket.on('answer', async ({ roomId, answerer, receiver, answer }) => {
+        const answeredUser = await getOneUser(answerer);
+        const receivedUser = await getOneUser(receiver);
         const data = {
             answerer: answeredUser,
             receiver: receivedUser,
@@ -49,9 +48,9 @@ const handleJoinRoom = (socket) => {
         }
     });
 
-    socket.on('ice-candidate', ({ roomId, sender, receiver, candidate }) => {
-        const senderUser = getOneUser(sender);
-        const receiverUser = getOneUser(receiver);
+    socket.on('ice-candidate', async ({ roomId, sender, receiver, candidate }) => {
+        const senderUser = await getOneUser(sender);
+        const receiverUser = await getOneUser(receiver);
         const data = {
             sender: senderUser,
             receiver: receiverUser,
@@ -64,39 +63,36 @@ const handleJoinRoom = (socket) => {
         }
     });
 
-    // Handle invitation, acceptance, and rejection
-    socket.on('send-invitation', ({ invitationSender, invitationReceiver }) => {
-        const sender = getOneUser(invitationSender);
-        const receiver = getOneUser(invitationReceiver);
+    socket.on('send-invitation', async ({ invitationSender, invitationReceiver }) => {
+        const sender = await getOneUser(invitationSender);
+        const receiver = await getOneUser(invitationReceiver);
         const data = {
             invitationSender: sender,
             invitationReceiver: receiver
         };
-        // Emit invitation event to the receiver
         io.to(invitationReceiver).emit('invitation', data);
     });
 
-    socket.on('accept-invitation', ({ answerer, receiver }) => {
-        const inviteAnswerer = getOneUser(answerer);
-        const answerReceiver = getOneUser(receiver);
+    socket.on('accept-invitation', async ({ answerer, receiver }) => {
+        const inviteAnswerer = await getOneUser(answerer);
+        const answerReceiver = await getOneUser(receiver);
         const data = {
             inviteAnswerer,
             answerReceiver
         };
-        // Notify both parties that the invitation was accepted
         io.to(receiver).emit('invitation-accepted', data);
     });
 
-    socket.on('reject-invitation', ({ rejecter, receiver }) => {
-        const inviteRejecter = getOneUser(rejecter);
-        const rejectReceiver = getOneUser(receiver);
+    socket.on('reject-invitation', async ({ rejecter, receiver }) => {
+        const inviteRejecter = await getOneUser(rejecter);
+        const rejectReceiver = await getOneUser(receiver);
         const data = {
             inviteRejecter,
             rejectReceiver
         };
-        // Notify the caller that the invitation was rejected
         io.to(receiver).emit('invitation-rejected', data);
     });
 };
 
 module.exports = handleJoinRoom;
+ */
