@@ -6,6 +6,7 @@ const userRouter = require('././apis/router/userRouter');
 const authRouter = require('./apis/router/authRouter');
 const messageRouter = require('./apis/router/messageRouter');
 const { app } = require('./apis/socket/socket');
+
 // const app = express();
 app.use(cors())
 app.use(express.json())

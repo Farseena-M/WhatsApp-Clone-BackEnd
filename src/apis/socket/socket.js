@@ -5,6 +5,7 @@ const handleJoinRoom = require('./controller/room');
 const app = express();
 
 
+
 const server = http.createServer(app);
 const io = new Server(server, {
     cors: {
@@ -20,6 +21,8 @@ const getRecieverSocketId = (reciever) =>{
 const userSocketMap = {}  // {userId : socketId}
 
 
+
+
 io.on('connection', (socket) => {
     console.log(`user connected ${socket.id}`);
     // handleJoinRoom(socket)
@@ -31,13 +34,17 @@ io.on('connection', (socket) => {
     //io.emit() is used to send events to all the connected clients
     io.emit('getOnlineUsers', Object.keys(userSocketMap))
 
-
+    socket.on('calleruser',data=>{
+        console.log(data,'ammiiii');    
+    })
     //socket.on() used to listen the events. Can be used both on the client and server side.
     socket.on('disconnect', () => {
-        console.log(`user disconnected ${socket.id}`);
+        console.log(`user disconnected ${socket.id}`);        
         delete userSocketMap[userId]
         io.emit('getOnlineUsers', Object.keys(userSocketMap))
     });
 });
+
+
 
 module.exports = { app, io, server,getRecieverSocketId };
