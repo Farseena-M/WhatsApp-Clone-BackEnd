@@ -4,6 +4,14 @@ const app = require('../src/app')
 const connectDb = require('./config/dbConnect')
 const { server } = require('./apis/socket/socket')
 const { PeerServer} = require('peer')
+const { Server } = require('socket.io');
+const http = require('http');
+
+
+
+
+// socket conncte
+
 
 connectDb()
 
