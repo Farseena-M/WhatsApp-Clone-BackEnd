@@ -16,7 +16,7 @@ app.use(morgan('dev'))
 
 app.use('/users/auth', authRouter)
 app.use('/users', userRouter)
-app.use('/users/messages',messageRouter)
+app.use('/users/messages', messageRouter)
 
 
 

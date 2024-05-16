@@ -2,7 +2,7 @@ const User = require('../model/userSchema')
 const asyncErrorHandler = require('../middlewares/asyncErrorHandler')
 const generateToken = require('../utils/generateToken')
 
-const SignUp = asyncErrorHandler(async (req, res) => {
+const SignUp = asyncErrorHandler(async (req, res) => {;
     try {
         const { name, email, password, phone, image } = req.body
         const Exist = await User.findOne({ name })

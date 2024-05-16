@@ -8,11 +8,6 @@ const { Server } = require('socket.io');
 const http = require('http');
 
 
-
-
-// socket conncte
-
-
 connectDb()
 
 // create peerServer WebRTC
