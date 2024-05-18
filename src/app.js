@@ -8,7 +8,14 @@ const messageRouter = require('./apis/router/messageRouter');
 const { app } = require('./apis/socket/socket');
 
 // const app = express();
-app.use(cors())
+
+const corsOptions = {
+   origin: "https://whats-app-clone-front-end-seven.vercel.app",
+   credentials: true, 
+   optionSuccessStatus: 200
+ };
+
+app.use(cors(corsOptions))
 app.use(express.json())
 app.use(morgan('dev'))
 
