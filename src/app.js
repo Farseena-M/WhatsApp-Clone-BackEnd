@@ -10,7 +10,7 @@ const { app } = require('./apis/socket/socket');
 // const app = express();
 
 const corsOptions = {
-   origin: "https://whats-app-clone-front-end-seven.vercel.app",
+   origin: "https://whats-app-clone-front-end-seven.vercel.app/",
    credentials: true, 
    optionSuccessStatus: 200
  };
