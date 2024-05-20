@@ -14,6 +14,10 @@ connectDb()
 
 PeerServer({port:3001, path:'/'})
 
+app.use('/', (req, res) => {
+    res.write('Hey this is working')
+})
+
 
 const port = 4000
 server.listen(port, () => {
