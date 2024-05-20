@@ -7,5 +7,4 @@ authRouter.post('/signup',uploadImage,(userAuthController.SignUp))
 .post('/login',(userAuthController.Login))
 
 
-
 module.exports = authRouter

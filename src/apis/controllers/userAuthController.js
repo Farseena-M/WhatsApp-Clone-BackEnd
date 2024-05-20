@@ -16,7 +16,7 @@ const SignUp = asyncErrorHandler(async (req, res) => {;
             email: email,
             password: password,
             phone: phone,
-            image: image
+            image: image,
         })
 
         await newUser.save()
@@ -34,6 +34,7 @@ const SignUp = asyncErrorHandler(async (req, res) => {;
             image: newUser.image
         })
     } catch (error) {
+        console.log(error)
         res.status(500).json({
             status: 'Error',
             message: 'Internal server error'
@@ -61,7 +62,6 @@ const Login = asyncErrorHandler(async (req, res) => {
         token,
         _id: findUser._id,
         name: findUser.name,
-        username: findUser.username,
         image: findUser.image,
         about: findUser.about,
         phone: findUser.phone
