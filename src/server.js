@@ -19,7 +19,7 @@ app.use('/', (req, res) => {
 })
 
 
-const port = 4000
+const port = 3001
 server.listen(port, () => {
     console.log(`Listening to ${port}`);
 })
