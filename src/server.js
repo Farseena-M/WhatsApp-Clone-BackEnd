@@ -12,7 +12,7 @@ connectDb()
 
 // create peerServer WebRTC
 
-PeerServer({port:3002, path:'/'})
+PeerServer({port:3001, path:'/'})
 
 app.use('/', (req, res) => {
     res.write('Hey this is working')
