@@ -9,12 +9,6 @@ const { app } = require('./apis/socket/socket');
 
 // const app = express();
 
-const corsOptions = {
-   origin: "https://whats-app-clone-front-end-seven.vercel.app/",
-   credentials: true, 
-   optionSuccessStatus: 200
- };
-
 app.use(cors({origin:'*'}))
 app.use(express.json())
 app.use(morgan('dev'))
