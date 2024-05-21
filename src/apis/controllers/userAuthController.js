@@ -20,12 +20,11 @@ const SignUp = asyncErrorHandler(async (req, res) => {;
         })
 
         await newUser.save()
-        const token = generateToken(newUser._id)
+        // const token = generateToken(newUser._id)
 
 
         return res.status(201).json({
             status: 'Success',
-            token,
             _id: newUser._id,
             name: newUser.name,
             email: newUser.email,
@@ -66,7 +65,6 @@ const Login = asyncErrorHandler(async (req, res) => {
         about: findUser.about,
         phone: findUser.phone
     })
-
 })
 
 

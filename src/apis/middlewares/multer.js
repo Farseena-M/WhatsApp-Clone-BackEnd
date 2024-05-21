@@ -19,6 +19,7 @@ cloudinary.config({
 })
 
 const uploadImage = (req, res, next) => {
+    console.log(req.body)
     upload.single('image')(req, res, async (err) => {
         if (err) {
             return res.status(404).json({
@@ -30,9 +31,6 @@ const uploadImage = (req, res, next) => {
                 folder: 'Images'
             })
             req.body.image = result.secure_url
-
-
-
             next()
         } catch (error) {
             // fs.unlink(req.file.path,(unlinker) => {
@@ -40,7 +38,7 @@ const uploadImage = (req, res, next) => {
             //       console.log(`deleting local file`, unlinker)
             //     }
             //   })
-            next()
+            next(error)
 
         }
     })
