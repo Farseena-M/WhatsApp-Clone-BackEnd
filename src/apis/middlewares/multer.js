@@ -1,49 +1,52 @@
-const multer = require('multer')
-const fs = require('fs')
-const path = require('path')
-const storage = multer.diskStorage({
-    destination: path.join(__dirname, "uploads"),
-    filename: (req, file, cb) => {
-        return cb(null, `${file.fieldname}_${Date.now()} ${file.originalname}`)
-    }
-})
-
-const upload = multer({ storage })
-
-const cloudinary = require('cloudinary').v2
+const multer = require('multer');
+const path = require('path');
+const fs = require('fs');
+const cloudinary = require('cloudinary').v2;
 
 cloudinary.config({
-    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-    api_key: process.env.CLOUDINARY_API_KEY,
-    api_secret: process.env.CLOUDINARY_API_SECRET
+    cloud_name: 'dchcxvy2k',
+    api_key: '457724698749987',
+    api_secret: 'btqtgge4rEJMrhbZtl1jLlnF0es'
 })
 
+const storage = multer.diskStorage({
+    destination: path.join(__dirname, "profile"),
+    filename: (req, file, cb) => {
+        cb(null, `${file.fieldname}_${Date.now()}_${file.originalname}`);
+    }
+});
+
+const upload = multer({ storage });
+
 const uploadImage = (req, res, next) => {
-    console.log(req.body)
     upload.single('image')(req, res, async (err) => {
         if (err) {
             return res.status(404).json({
                 status: 'error',
                 message: err.message
-            })
-        } try {
-            const result = await cloudinary.uploader.upload(req.file.path, {
-                folder: 'Images'
-            })
-            req.body.image = result.secure_url
-            next()
-        } catch (error) {
-            // fs.unlink(req.file.path,(unlinker) => {
-            //     if (unlinker) {
-            //       console.log(`deleting local file`, unlinker)
-            //     }
-            //   })
-            next(error)
-
+            });
         }
-    })
-}
 
+        if (req.file) {
+            try {
+                const result = await cloudinary.uploader.upload(req.file.path, {
+                    folder: 'Images'
+                });
+                req.body.image = result.secure_url;
 
+                fs.unlink(req.file.path, (unlinkError) => {
+                    if (unlinkError) console.log(`Error deleting local file: ${unlinkError.message}`);
+                });
 
-module.exports = uploadImage
+                next();
+            } catch (error) {
+                console.error('Cloudinary upload error:', error);
+                next(error);
+            }
+        } else {
+            next();
+        }
+    });
+};
+
+module.exports = uploadImage;

@@ -4,8 +4,6 @@ const app = require('../src/app')
 const connectDb = require('./config/dbConnect')
 const { server } = require('./apis/socket/socket')
 const { PeerServer} = require('peer')
-const { Server } = require('socket.io');
-const http = require('http');
 
 
 connectDb()
@@ -19,7 +17,7 @@ app.use('/', (req, res) => {
 })
 
 
-const port = 4000
+const port = 9000
 server.listen(port, () => {
     console.log(`Listening to ${port}`);
 })

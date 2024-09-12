@@ -2,7 +2,7 @@ const User = require('../model/userSchema')
 const asyncErrorHandler = require('../middlewares/asyncErrorHandler')
 const generateToken = require('../utils/generateToken')
 
-const SignUp = asyncErrorHandler(async (req, res) => {;
+const SignUp = asyncErrorHandler(async (req, res) => {
     try {
         const { name, email, password, phone, image } = req.body
         const Exist = await User.findOne({ name })
@@ -57,7 +57,7 @@ const Login = asyncErrorHandler(async (req, res) => {
     const token = generateToken(findUser._id)
 
     return res.status(200).json({
-        message:'Success',
+        message: 'Success',
         token,
         _id: findUser._id,
         name: findUser.name,

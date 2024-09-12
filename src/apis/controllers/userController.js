@@ -59,12 +59,9 @@ const updateUserProfile = asyncErrorHandler(async (req, res) => {
         .status(400)
         .json({ error: "You can't Update other user's profile" });
 
-    if (image) {
-      if (user.image) {
-        await cloudinary.uploader.destroy(
-          user.image.split("/").pop(".")[0]
-        );
-      }
+    if (image && user.image) {
+      const publicId = user.image.split('/').pop().split('.')[0];
+      await cloudinary.uploader.destroy(publicId);
     }
 
     user.username = username || user.username;

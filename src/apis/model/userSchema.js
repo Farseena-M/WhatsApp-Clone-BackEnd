@@ -32,10 +32,12 @@ const userSchema = new mongoose.Schema({
   },
   username: {
     type: String,
+    default:null
     // required: [true, 'Username is required']
   },
   about: {
-    type: String
+    type: String,
+    default:null
   },
   isDeleted: {
     type: Boolean,
