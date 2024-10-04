@@ -13,7 +13,7 @@ const io = new Server(server, {
 });
 
 
-let userSocketMap = []       // [userId : socketId]
+let userSocketMap = []
 
 
 const getRecieverSocketId = (reciever) => {
@@ -28,11 +28,45 @@ io.on('connection', (socket) => {
     if (userId != 'undefined') userSocketMap[userId] = socket.id
 
 
-    //io.emit() is used to send events to all the connected clients
+    // io.emit() is used to send events to all the connected clients
     io.emit('getOnlineUsers', Object.keys(userSocketMap))
 
 
-    //socket.on() used to listen the events. Can be used both on the client and server side.
+
+    // VideoCall Signaling
+
+    socket.on('sendOffer', ({ offer, receiverId }) => {
+        const receiverSocketId = getRecieverSocketId(receiverId);
+        if (receiverSocketId) {
+            io.to(receiverSocketId).emit('receiveOffer', {
+                offer,
+                senderId: userId, 
+            });
+        }
+    });
+
+    socket.on('sendAnswer', ({ answer, senderId }) => {
+        io.to(senderId).emit('receiveAnswer', {
+            answer,
+            receiverId: userId, 
+        });
+    });
+
+
+    socket.on('sendIceCandidate', ({ candidate, receiverId }) => {
+        const receiverSocketId = getRecieverSocketId(receiverId);
+        if (receiverSocketId) {
+            io.to(receiverSocketId).emit('receiveIceCandidate', {
+                candidate,
+                senderId: userId, 
+            });
+        }
+    });
+
+
+
+
+    // socket.on() used to listen the events.
     socket.on('disconnect', () => {
         console.log(`user disconnected ${socket.id}`);
         delete userSocketMap[userId]
